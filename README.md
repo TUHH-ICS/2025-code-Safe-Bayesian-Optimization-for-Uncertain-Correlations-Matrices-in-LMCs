@@ -7,7 +7,7 @@ This repository contains the source code and supplementary material for the pape
 
 The code allows for the reproduction of all tables and figures presented in the manuscript.
 
-# Safe Bayesian Optimization for Uncertain Correlations Matrices
+# Safe Bayesian Optimization for Uncertain Correlations Matrices in Linear Models of Co-Regionalization
 
 This repository contains the code required to reproduce all tables and figures presented in the manuscript: **"Safe Bayesian Optimization for Uncertain Correlations Matrices in Linear Models of Coregionalization."**
 
