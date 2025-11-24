@@ -28,8 +28,8 @@ from utils.functions import MixedMTRKHSFunction
 import random
 import numpy as np
 import pickle
-import argparse
 from gpytorch.kernels import RBFKernel
+from utils.get_init_inputs import get_init_inputs
 
 
 function_name = "ICM"
@@ -37,7 +37,7 @@ d = 4
 data_sets = []
 bests = []
 torch.set_default_dtype(torch.float64)
-seeds = [73, 1, 92, 23, 45, 67, 89, 12, 34, 56, 78, 90, 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888]
+seeds = [73, 1, 92, 23, 45, 67, 89, 12, 34, 56, 78, 90, 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888] # seeds for experiments, feel free to modify
 for seed in seeds:
     
     torch.manual_seed(seed)
@@ -51,14 +51,19 @@ for seed in seeds:
     norm_bounds = torch.tensor([[-1.0], [1.0]]).repeat(1,d)
     kernel = RBFKernel(ard_num_dims=d)
     kernel.lengthscale = torch.ones(d)*0.2
-    obj = MixedMTRKHSFunction(cor=[.85,.0], B=[30.5,30.5/3],id_norm=True, only_task_2=False, bounds=norm_bounds, kernel=kernel)     
+    obj = MixedMTRKHSFunction(cor=[.85,.0], B=[30.5,10.2], id_norm=True, only_task_2=False, bounds=norm_bounds, kernel=kernel)     
     bounds = obj.bounds
     obj.plot()
     T = -1
     tasks = [0,1]
 
     nruns = 100 # number of optimization runs
-    norm_x0=torch.tensor(torch.load(f'data/x_init_dim{d}/X_init_MTRKHSFunction_dim{d}_{seed}.pt')['X_init']).view(1,d)
+    # If no initial data is found, generate new initial data
+    try:
+        norm_x0 = torch.tensor(torch.load(f'data/x_init_dim{d}/X_init_MTRKHSFunction_dim{d}_{seed}.pt')['X_init']).view(1, d)
+    except FileNotFoundError:
+        print(f"No initial data found for seed {seed}. Generating new initial data.")
+        norm_x0 = get_init_inputs(norm_bounds, seeds=[seed])['X_init']
 
     tasks = [0]
     num_sup_task_samples = 1
