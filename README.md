@@ -32,7 +32,6 @@ To set up the environment, follow these steps:
     ```
 
 3.  **Install dependencies:**
-    It is recommended to use a virtual environment.
     ```bash
     pip install -r requirements.txt
     ```
