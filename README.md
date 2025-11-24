@@ -23,7 +23,7 @@ To set up the environment, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone 
+    git clone https://github.com/TUHH-ICS/2025-code-Safe-Bayesian-Optimization-for-Uncertain-Correlations-Matrices-in-LMCs.git
     ```
 
 2.  **Navigate to the project directory:**
